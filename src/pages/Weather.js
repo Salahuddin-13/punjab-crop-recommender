@@ -1,92 +1,67 @@
-import React, { useEffect, useState } from "react";
-import { DISTRICTS } from "../data/crops";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 export default function Weather() {
-  const [district, setDistrict] = useState("Ranchi");
-  const [data, setData] = useState(null);
-  const [err, setErr] = useState("");
-
-  const apiKey = process.env.REACT_APP_WEATHER_KEY;
+  const [city, setCity] = useState("Ranchi");
+  const [weather, setWeather] = useState(null);
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    async function fetchWeather() {
-      try {
-        setErr("");
-        setData(null);
-        const q = encodeURIComponent(`${district},IN`);
-        const res = await fetch(
-          `https://api.openweathermap.org/data/2.5/weather?q=${q}&units=metric&appid=${apiKey}`
-        );
-        const json = await res.json();
-        if (json.cod !== 200) throw new Error(json.message || "Failed");
-        setData(json);
-      } catch (e) {
-        setErr(e.message);
-      }
+    fetchWeather(city);
+  }, []);
+
+  const fetchWeather = async (cityName) => {
+    setError("");
+    setWeather(null);
+    try {
+      const apiKey = "5e04c9e9f749a242973926ba146c8772";
+      console.log("API key:", apiKey);
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName},IN&units=metric&appid=${apiKey}`;
+      const response = await axios.get(url);
+      setWeather(response.data);
+    } catch (err) {
+      setError("Unable to fetch weather. Check city name or API key.");
     }
-    if (apiKey) fetchWeather();
-  }, [district, apiKey]);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    fetchWeather(city);
+  };
 
   return (
-    <div className="max-w-7xl mx-auto px-6 py-10">
-      <h2 className="text-2xl md:text-3xl font-bold">🌦️ Weather</h2>
-      <p className="text-slate-600 mt-1">Live current weather from OpenWeather.</p>
-
-      <div className="grid md:grid-cols-3 gap-4 mt-6 bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
-        <div>
-          <label className="text-sm font-semibold">District</label>
-          <select
-            className="w-full rounded-xl border px-3 py-2 mt-1"
-            value={district}
-            onChange={(e) => setDistrict(e.target.value)}
-          >
-            {DISTRICTS.map((d) => (
-              <option key={d}>{d}</option>
-            ))}
-          </select>
-        </div>
-        <div className="md:col-span-2 text-sm text-slate-600">
-          <p>Tip: If a district isn’t found, try a nearby major city.</p>
-        </div>
-      </div>
-
-      {!apiKey && (
-        <div className="mt-6 p-4 rounded-xl bg-yellow-50 border border-yellow-200 text-yellow-800">
-          Add your API key to .env and restart the server.
-        </div>
-      )}
-
-      {err && (
-        <div className="mt-6 p-4 rounded-xl bg-red-50 border border-red-200 text-red-800">
-          Error: {err}
-        </div>
-      )}
-
-      {data && (
-        <div className="mt-6 grid md:grid-cols-3 gap-4">
-          <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-            <div className="text-lg font-semibold">
-              {data.name}, {data.sys.country}
-            </div>
-            <div className="text-4xl font-bold mt-2">
-              {Math.round(data.main.temp)}°C
-            </div>
-            <div className="text-slate-600 mt-1 capitalize">
-              {data.weather[0].description}
-            </div>
-          </div>
-          <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-            <div>Humidity: {data.main.humidity}%</div>
-            <div>Wind: {Math.round(data.wind.speed)} m/s</div>
-            <div>Pressure: {data.main.pressure} hPa</div>
-          </div>
-          <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-            <div>Min: {Math.round(data.main.temp_min)}°C</div>
-            <div>Max: {Math.round(data.main.temp_max)}°C</div>
-            <div>Feels like: {Math.round(data.main.feels_like)}°C</div>
-          </div>
+    <div className="max-w-md mx-auto p-6 bg-white rounded shadow mt-8">
+      <h2 className="text-2xl font-bold mb-4">Current Weather</h2>
+      <form onSubmit={handleSubmit} className="mb-4">
+        <input
+          type="text"
+          value={city}
+          onChange={(e) => setCity(e.target.value)}
+          className="border rounded px-3 py-2 w-full"
+          placeholder="Enter city (e.g., Ranchi)"
+        />
+        <button
+          type="submit"
+          className="mt-2 bg-blue-600 text-white px-4 py-2 rounded"
+        >
+          Get Weather
+        </button>
+      </form>
+      {error && <p className="text-red-600">{error}</p>}
+      {weather && (
+        <div className="text-center">
+          <h3 className="text-xl font-semibold">
+            {weather.name}, {weather.sys.country}
+          </h3>
+          <p className="mt-2">
+            {Math.round(weather.main.temp)}°C – {weather.weather[0].description}
+          </p>
+          <p>Humidity: {weather.main.humidity}%</p>
+          <p>Wind: {weather.wind.speed} m/s</p>
         </div>
       )}
     </div>
-);
+  );
 }
+
+

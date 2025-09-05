@@ -1,5 +1,5 @@
-import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import React, { useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
@@ -10,9 +10,13 @@ import Resources from "./pages/Resources";
 import Profile from "./pages/Profile";
 
 export default function App() {
+  useEffect(() => {
+    document.title = "Jharkhand Crop Recommender";
+  }, []);
+
   return (
-    <BrowserRouter>
-      <div className="min-h-screen flex flex-col bg-slate-50 text-slate-800">
+    <Router>
+      <div className="min-h-screen bg-slate-50 flex flex-col">
         <Navbar />
         <main className="flex-1">
           <Routes>
@@ -26,7 +30,7 @@ export default function App() {
         </main>
         <Footer />
       </div>
-    </BrowserRouter>
+    </Router>
   );
 }
-;
+

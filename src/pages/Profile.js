@@ -2,9 +2,9 @@ import React from "react";
 
 export default function Profile() {
   return (
-    <div className="max-w-7xl mx-auto px-6 py-10">
-      <h2 className="text-2xl md:text-3xl font-bold">👤 Profile</h2>
-      <p className="text-slate-600 mt-1">Sign-in & saved recommendations — coming soon.</p>
+    <div className="max-w-6xl mx-auto p-6">
+      <h1 className="text-3xl font-bold mb-6">👤 User Profile</h1>
+      <p className="text-lg text-gray-600">Profile page coming soon...</p>
     </div>
   );
 }

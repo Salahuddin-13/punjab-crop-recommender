@@ -1,146 +1,58 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { useLanguage } from "../contexts/LanguageContext";
+import { useTranslation } from "react-i18next";
 
 export default function Navbar() {
-  const { language, changeLanguage, t } = useLanguage();
+  const { t, i18n } = useTranslation();
   const location = useLocation();
 
-  const isActive = (path) => {
-    return location.pathname === path;
-  };
+  const languages = [
+    { code: "en", label: "English" },
+    { code: "hi", label: "हिन्दी" }
+  ];
 
   return (
     <nav className="bg-white shadow-sm border-b sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          {/* Logo and Brand */}
-          <Link to="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
+          <Link to="/" className="flex items-center space-x-2">
             <span className="text-2xl">🌱</span>
-            <div>
-              <h1 className="font-bold text-xl text-gray-900">Jharkhand Agriculture</h1>
-              <p className="text-sm text-gray-600">AI Crop Recommender</p>
-            </div>
+            <span className="font-bold text-xl">Jharkhand Agriculture</span>
           </Link>
-          
-          {/* Navigation Links */}
-          <div className="hidden md:flex items-center space-x-1">
-            <Link 
-              to="/" 
-              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
-                isActive("/") 
-                  ? "text-green-600 font-semibold bg-green-50" 
-                  : "text-gray-700 hover:text-green-600 hover:bg-gray-50"
-              }`}
-            >
-              {t('home') || 'Home'}
-            </Link>
-            
-            <Link 
-              to="/crops" 
-              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
-                isActive("/crops") 
-                  ? "text-green-600 font-semibold bg-green-50" 
-                  : "text-gray-700 hover:text-green-600 hover:bg-gray-50"
-              }`}
-            >
-              {t('crops') || 'Crops'}
-            </Link>
-            
-            <Link 
-              to="/weather" 
-              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
-                isActive("/weather") 
-                  ? "text-green-600 font-semibold bg-green-50" 
-                  : "text-gray-700 hover:text-green-600 hover:bg-gray-50"
-              }`}
-            >
-              {t('weather') || 'Weather'}
-            </Link>
-            
-            <Link 
-              to="/calendar" 
-              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
-                isActive("/calendar") 
-                  ? "text-green-600 font-semibold bg-green-50" 
-                  : "text-gray-700 hover:text-green-600 hover:bg-gray-50"
-              }`}
-            >
-              {t('calendar') || 'Calendar'}
-            </Link>
-            
-            <Link 
-              to="/resources" 
-              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
-                isActive("/resources") 
-                  ? "text-green-600 font-semibold bg-green-50" 
-                  : "text-gray-700 hover:text-green-600 hover:bg-gray-50"
-              }`}
-            >
-              {t('resources') || 'Resources'}
-            </Link>
-            
-            <Link 
-              to="/profile" 
-              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
-                isActive("/profile") 
-                  ? "text-green-600 font-semibold bg-green-50" 
-                  : "text-gray-700 hover:text-green-600 hover:bg-gray-50"
-              }`}
-            >
-              {t('profile') || 'Profile'}
-            </Link>
-            
-            {/* Language Switcher */}
-            <div className="ml-4 pl-4 border-l border-gray-200">
-              <select 
-                value={language}
-                onChange={(e) => changeLanguage(e.target.value)}
-                className="border border-gray-300 rounded-md px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-              >
-                <option value="en">English</option>
-                <option value="hi">हिंदी</option>
-              </select>
-            </div>
-          </div>
 
-          {/* Mobile menu */}
-          <div className="md:hidden flex items-center space-x-2">
-            <select 
-              value={language}
-              onChange={(e) => changeLanguage(e.target.value)}
-              className="border border-gray-300 rounded px-2 py-1 text-xs"
+          <div className="hidden md:flex items-center space-x-4">
+            <Link to="/" className={`px-3 py-2 rounded-md ${location.pathname === "/" ? "text-green-600 bg-green-50" : "text-gray-700 hover:text-green-600"}`}>
+              {t('home')}
+            </Link>
+            <Link to="/crops" className={`px-3 py-2 rounded-md ${location.pathname === "/crops" ? "text-green-600 bg-green-50" : "text-gray-700 hover:text-green-600"}`}>
+              {t('crops')}
+            </Link>
+            <Link to="/weather" className={`px-3 py-2 rounded-md ${location.pathname === "/weather" ? "text-green-600 bg-green-50" : "text-gray-700 hover:text-green-600"}`}>
+              {t('weather')}
+            </Link>
+            <Link to="/calendar" className={`px-3 py-2 rounded-md ${location.pathname === "/calendar" ? "text-green-600 bg-green-50" : "text-gray-700 hover:text-green-600"}`}>
+              {t('calendar')}
+            </Link>
+            <Link to="/resources" className={`px-3 py-2 rounded-md ${location.pathname === "/resources" ? "text-green-600 bg-green-50" : "text-gray-700 hover:text-green-600"}`}>
+              {t('resources')}
+            </Link>
+            <Link to="/profile" className={`px-3 py-2 rounded-md ${location.pathname === "/profile" ? "text-green-600 bg-green-50" : "text-gray-700 hover:text-green-600"}`}>
+              {t('profile')}
+            </Link>
+
+            <select
+              value={i18n.language}
+              onChange={(e) => i18n.changeLanguage(e.target.value)}
+              className="border border-gray-300 rounded-md px-3 py-1 text-sm"
             >
-              <option value="en">EN</option>
-              <option value="hi">हि</option>
+              {languages.map(({ code, label }) => (
+                <option key={code} value={code}>{label}</option>
+              ))}
             </select>
-          </div>
-        </div>
-
-        {/* Mobile Navigation Menu */}
-        <div className="md:hidden pb-3 pt-2">
-          <div className="flex flex-col space-y-1">
-            <Link to="/" className={`block px-3 py-2 rounded-md text-base font-medium ${isActive("/") ? "text-green-600 font-semibold bg-green-50" : "text-gray-700 hover:text-green-600 hover:bg-gray-50"}`}>
-              {t('home') || 'Home'}
-            </Link>
-            <Link to="/crops" className={`block px-3 py-2 rounded-md text-base font-medium ${isActive("/crops") ? "text-green-600 font-semibold bg-green-50" : "text-gray-700 hover:text-green-600 hover:bg-gray-50"}`}>
-              {t('crops') || 'Crops'}
-            </Link>
-            <Link to="/weather" className={`block px-3 py-2 rounded-md text-base font-medium ${isActive("/weather") ? "text-green-600 font-semibold bg-green-50" : "text-gray-700 hover:text-green-600 hover:bg-gray-50"}`}>
-              {t('weather') || 'Weather'}
-            </Link>
-            <Link to="/calendar" className={`block px-3 py-2 rounded-md text-base font-medium ${isActive("/calendar") ? "text-green-600 font-semibold bg-green-50" : "text-gray-700 hover:text-green-600 hover:bg-gray-50"}`}>
-              {t('calendar') || 'Calendar'}
-            </Link>
-            <Link to="/resources" className={`block px-3 py-2 rounded-md text-base font-medium ${isActive("/resources") ? "text-green-600 font-semibold bg-green-50" : "text-gray-700 hover:text-green-600 hover:bg-gray-50"}`}>
-              {t('resources') || 'Resources'}
-            </Link>
-            <Link to="/profile" className={`block px-3 py-2 rounded-md text-base font-medium ${isActive("/profile") ? "text-green-600 font-semibold bg-green-50" : "text-gray-700 hover:text-green-600 hover:bg-gray-50"}`}>
-              {t('profile') || 'Profile'}
-            </Link>
           </div>
         </div>
       </div>
     </nav>
   );
 }
+

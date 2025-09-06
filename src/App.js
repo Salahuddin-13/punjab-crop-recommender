@@ -10,6 +10,7 @@ import Weather from "./pages/Weather";
 import Calendar from "./pages/Calendar";
 import Resources from "./pages/Resources";
 import Profile from "./pages/Profile";
+import CropRecommendations from "./pages/CropRecommendations";
 
 export default function App() {
   useEffect(() => {
@@ -30,6 +31,7 @@ export default function App() {
               <Route path="/calendar" element={<Calendar />} />
               <Route path="/resources" element={<Resources />} />
               <Route path="/profile" element={<Profile />} />
+		 <Route path="/crops" element={<CropRecommendations />} />
             </Routes>
           </main>
           <Footer />

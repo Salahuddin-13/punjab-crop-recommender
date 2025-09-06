@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import axios from "axios";
 
 export default function Weather() {
@@ -15,6 +15,38 @@ export default function Weather() {
     "Lohardaga", "Gumla", "Simdega", "Khunti", "Saraikela-Kharsawan",
     "Deoghar", "Dumka", "Jamtara", "Godda", "Pakur", "Sahebganj"
   ];
+
+  // Memoize farming advice to prevent recalculation
+  const farmingAdvice = useMemo(() => {
+    if (!weather) return [];
+    
+    const temp = weather.main.temp;
+    const humidity = weather.main.humidity;
+    const condition = weather.weather[0].main.toLowerCase();
+    
+    const advice = [];
+    
+    if (temp >= 25 && temp <= 35 && humidity >= 60 && humidity <= 80) {
+      advice.push("🌱 Ideal conditions for most crops. Consider planting vegetables.");
+    }
+    
+    if (condition.includes('rain')) {
+      advice.push("🌧️ Good time for land preparation and transplanting.");
+      advice.push("💧 Reduce irrigation schedule due to natural rainfall.");
+    }
+    
+    if (temp > 30) {
+      advice.push("🌡️ Apply mulching to conserve soil moisture.");
+      advice.push("💦 Increase irrigation frequency for sensitive crops.");
+    }
+    
+    if (humidity > 75) {
+      advice.push("🍄 Monitor for pest and disease outbreaks.");
+      advice.push("🌿 Ensure proper ventilation for greenhouse crops.");
+    }
+    
+    return advice;
+  }, [weather]);
 
   const generateFarmingAlerts = useCallback((current, forecast) => {
     const newAlerts = [];
@@ -79,36 +111,36 @@ export default function Weather() {
   const fetchWeatherData = useCallback(async (cityName) => {
     setError("");
     setLoading(true);
+    
     try {
       const apiKey = "5e04c9e9f749a242973926ba146c8772";
       
-      // Current weather
-      const currentUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName},IN&units=metric&appid=${apiKey}`;
-      const currentResponse = await axios.get(currentUrl);
+      // Use Promise.all for parallel requests (faster)
+      const [currentResponse, forecastResponse] = await Promise.all([
+        axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${cityName},IN&units=metric&appid=${apiKey}`),
+        axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${cityName},IN&units=metric&appid=${apiKey}`)
+      ]);
+
       setWeather(currentResponse.data);
-
-      // 5-day forecast
-      const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName},IN&units=metric&appid=${apiKey}`;
-      const forecastResponse = await axios.get(forecastUrl);
       setForecast(forecastResponse.data);
-
-      // Generate farming alerts
       generateFarmingAlerts(currentResponse.data, forecastResponse.data);
       
     } catch (err) {
       setError("Unable to fetch weather data. Please try again.");
       setWeather(null);
       setForecast(null);
+      setAlerts([]);
     } finally {
       setLoading(false);
     }
   }, [generateFarmingAlerts]);
 
+  // Only fetch on mount, not on every city change
   useEffect(() => {
     fetchWeatherData(city);
-  }, [city, fetchWeatherData]);
+  }, []); // Remove city dependency
 
-  const getWeatherIcon = (condition) => {
+  const getWeatherIcon = useCallback((condition) => {
     const iconMap = {
       'clear': '☀️',
       'clouds': '☁️',
@@ -120,47 +152,28 @@ export default function Weather() {
       'fog': '🌫️'
     };
     return iconMap[condition.toLowerCase()] || '🌤️';
-  };
+  }, []);
 
-  const getDayName = (timestamp) => {
+  const getDayName = useCallback((timestamp) => {
     return new Date(timestamp * 1000).toLocaleDateString('en-US', { weekday: 'short' });
-  };
-
-  const getFarmingAdvice = () => {
-    if (!weather) return [];
-    
-    const temp = weather.main.temp;
-    const humidity = weather.main.humidity;
-    const condition = weather.weather[0].main.toLowerCase();
-    
-    const advice = [];
-    
-    if (temp >= 25 && temp <= 35 && humidity >= 60 && humidity <= 80) {
-      advice.push("🌱 Ideal conditions for most crops. Consider planting vegetables.");
-    }
-    
-    if (condition.includes('rain')) {
-      advice.push("🌧️ Good time for land preparation and transplanting.");
-      advice.push("💧 Reduce irrigation schedule due to natural rainfall.");
-    }
-    
-    if (temp > 30) {
-      advice.push("🌡️ Apply mulching to conserve soil moisture.");
-      advice.push("💦 Increase irrigation frequency for sensitive crops.");
-    }
-    
-    if (humidity > 75) {
-      advice.push("🍄 Monitor for pest and disease outbreaks.");
-      advice.push("🌿 Ensure proper ventilation for greenhouse crops.");
-    }
-    
-    return advice;
-  };
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     fetchWeatherData(city);
   };
+
+  // Show loading spinner
+  if (loading && !weather) {
+    return (
+      <div className="max-w-6xl mx-auto p-6">
+        <div className="flex items-center justify-center h-64">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+          <span className="ml-4 text-lg">Loading weather data...</span>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-6xl mx-auto p-6">
@@ -278,7 +291,7 @@ export default function Weather() {
             <div className="bg-white rounded-lg shadow-lg p-6">
               <h3 className="text-lg font-bold mb-4">💡 Farming Tips</h3>
               <div className="space-y-2">
-                {getFarmingAdvice().map((tip, index) => (
+                {farmingAdvice.map((tip, index) => (
                   <div key={index} className="text-sm p-2 bg-green-50 rounded border-l-2 border-green-400">
                     {tip}
                   </div>
@@ -291,4 +304,5 @@ export default function Weather() {
     </div>
   );
 }
+
 

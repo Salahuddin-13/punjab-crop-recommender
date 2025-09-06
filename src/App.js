@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { LanguageProvider } from "./contexts/LanguageContext";
+import ScrollToTop from "./components/ScrollToTop";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
@@ -10,7 +11,7 @@ import Calendar from "./pages/Calendar";
 import Resources from "./pages/Resources";
 import Profile from "./pages/Profile";
 
-function App() {
+export default function App() {
   useEffect(() => {
     document.title = "Jharkhand Crop Recommender";
   }, []);
@@ -18,9 +19,10 @@ function App() {
   return (
     <LanguageProvider>
       <Router>
+        <ScrollToTop />
         <div className="min-h-screen bg-slate-50 flex flex-col">
           <Navbar />
-          <main className="flex-1">
+          <main className="flex-1 pt-4">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/crops" element={<Crops />} />
@@ -36,6 +38,3 @@ function App() {
     </LanguageProvider>
   );
 }
-
-export default App;
-

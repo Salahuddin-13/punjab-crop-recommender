@@ -2,32 +2,32 @@ import React from "react";
 
 export default function Footer() {
   return (
-    <footer className="bg-slate-900 text-slate-100">
-      <div className="max-w-7xl mx-auto px-4 py-8 grid md:grid-cols-3 gap-6">
-        <div>
-          <div className="font-semibold mb-2">Jharkhand Agriculture</div>
-          <p className="text-sm text-slate-300">
-            Decision-support for farmers. Prototype—verify with local officers.
+    <footer className="bg-gray-800 text-white mt-auto">
+      <div className="max-w-6xl mx-auto px-6 py-8">
+        <div className="grid md:grid-cols-3 gap-8 text-center md:text-left">
+          <div>
+            <h3 className="text-xl font-bold mb-3">🌾 Crops Covered</h3>
+            <p className="text-gray-300">Cereals, Pulses, Oilseeds, Vegetables, Fruits, Spices, Cash crops</p>
+          </div>
+          <div>
+            <h3 className="text-xl font-bold mb-3">📍 All Districts</h3>
+            <p className="text-gray-300">Ranchi, Bokaro, Dhanbad, East & West Singhbhum, and 19 more districts</p>
+          </div>
+          <div>
+            <h3 className="text-xl font-bold mb-3">🎯 Support</h3>
+            <p className="text-gray-300">24/7 farming assistance, weather alerts, market price updates</p>
+          </div>
+        </div>
+        
+        {/* Credit Section */}
+        <div className="border-t border-gray-700 mt-8 pt-6 text-center">
+          <p className="text-gray-400 text-sm mb-2">
+            © 2025 Jharkhand Agriculture. All rights reserved.
+          </p>
+          <p className="text-gray-300">
+            Made with ❣️ by <span className="font-semibold text-green-400">Salahuddin</span>
           </p>
         </div>
-        <div>
-          <div className="font-semibold mb-2">Services</div>
-          <ul className="text-sm text-slate-300 space-y-1">
-            <li>Crop Recommendations</li>
-            <li>Weather Forecast</li>
-            <li>Planting Calendar</li>
-            <li>Resources & Schemes</li>
-          </ul>
-        </div>
-        <div>
-          <div className="font-semibold mb-2">Contact</div>
-          <p className="text-sm text-slate-300">
-            Dept. of Agriculture, Ranchi, Jharkhand<br/>help@agri.jh.gov.in
-          </p>
-        </div>
-      </div>
-      <div className="text-center text-xs text-slate-400 py-3 border-t border-slate-800">
-        © {new Date().getFullYear()} Government of Jharkhand
       </div>
     </footer>
   );

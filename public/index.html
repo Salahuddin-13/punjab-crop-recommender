@@ -2,17 +2,39 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+
+    <!-- Google Translate widget -->
+    <script type="text/javascript">
+      function googleTranslateElementInit() {
+        new window.google.translate.TranslateElement(
+          {
+            pageLanguage: 'en',
+            layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE
+          },
+          'google_translate_element'
+        );
+      }
+    </script>
+    <script
+      type="text/javascript"
+      src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+    ></script>
+    <!-- End Google Translate widget -->
+
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#16a34a" />
-    <meta name="description" content="Smart crop recommendation system for Jharkhand farmers - AI-powered agricultural insights" />
+    <meta
+      name="description"
+      content="Smart crop recommendation system for Jharkhand farmers - AI-powered agricultural insights"
+    />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <title>Jharkhand Agriculture - AI Crop Recommender</title>
   </head>
   <body>
+    <div id="google_translate_element" class="fixed top-4 right-4 z-50"></div>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
   </body>
 </html>
-

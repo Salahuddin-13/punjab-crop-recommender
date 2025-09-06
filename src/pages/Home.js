@@ -204,25 +204,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Footer Info */}
+      {/* REMOVE THIS SECTION - IT'S DUPLICATING THE FOOTER */}
+      {/* 
       <section className="py-12 bg-gray-800 text-white">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="grid md:grid-cols-3 gap-8 text-center md:text-left">
-            <div>
-              <h3 className="text-xl font-bold mb-3">🌾 Crops Covered</h3>
-              <p className="text-gray-300">Cereals, Pulses, Oilseeds, Vegetables, Fruits, Spices, Cash crops</p>
-            </div>
-            <div>
-              <h3 className="text-xl font-bold mb-3">📍 All Districts</h3>
-              <p className="text-gray-300">Ranchi, Bokaro, Dhanbad, East & West Singhbhum, and 19 more districts</p>
-            </div>
-            <div>
-              <h3 className="text-xl font-bold mb-3">🎯 Support</h3>
-              <p className="text-gray-300">24/7 farming assistance, weather alerts, market price updates</p>
-            </div>
-          </div>
-        </div>
-      </section>
+        ... footer content ...
+      </section> 
+      */}
     </div>
   );
 }

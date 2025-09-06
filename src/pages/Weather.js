@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useMemo } from "react";
 import axios from "axios";
 
 export default function Weather() {
-  const [city, setCity] = useState("Ranchi");
+  const [city, setCity] = useState("Ludhiana");
   const [weather, setWeather] = useState(null);
   const [forecast, setForecast] = useState(null);
   const [error, setError] = useState("");
@@ -10,10 +10,11 @@ export default function Weather() {
   const [alerts, setAlerts] = useState([]);
 
   const districts = [
-    "Ranchi", "Bokaro", "Dhanbad", "East Singhbhum", "West Singhbhum",
-    "Hazaribagh", "Giridih", "Koderma", "Chatra", "Palamu", "Latehar",
-    "Lohardaga", "Gumla", "Simdega", "Khunti", "Saraikela-Kharsawan",
-    "Deoghar", "Dumka", "Jamtara", "Godda", "Pakur", "Sahebganj"
+    "Amritsar", "Bathinda", "Faridkot", "Fatehgarh Sahib", "Fazilka", 
+    "Ferozepur", "Gurdaspur", "Hoshiarpur", "Jalandhar", "Kapurthala", 
+    "Ludhiana", "Mansa", "Moga", "Muktsar", "Pathankot", "Patiala", 
+    "Rupnagar", "Sangrur", "SAS Nagar (Mohali)", "Shaheed Bhagat Singh Nagar", 
+    "Tarn Taran", "Barnala"
   ];
 
   // Memoize farming advice to prevent recalculation
@@ -26,23 +27,32 @@ export default function Weather() {
     
     const advice = [];
     
-    if (temp >= 25 && temp <= 35 && humidity >= 60 && humidity <= 80) {
-      advice.push("🌱 Ideal conditions for most crops. Consider planting vegetables.");
+    if (temp >= 20 && temp <= 30 && humidity >= 50 && humidity <= 70) {
+      advice.push("🌾 Perfect conditions for wheat sowing in Punjab. Plan for October-November planting.");
+    }
+    
+    if (temp >= 25 && temp <= 35 && condition.includes('clear')) {
+      advice.push("🌾 Good for paddy transplanting. Ensure adequate water supply for basmati varieties.");
     }
     
     if (condition.includes('rain')) {
-      advice.push("🌧️ Good time for land preparation and transplanting.");
-      advice.push("💧 Reduce irrigation schedule due to natural rainfall.");
+      advice.push("🌧️ Monsoon rains detected. Ideal for kharif sowing and land preparation.");
+      advice.push("💧 Reduce irrigation schedule. Monitor for water logging in paddy fields.");
     }
     
-    if (temp > 30) {
-      advice.push("🌡️ Apply mulching to conserve soil moisture.");
-      advice.push("💦 Increase irrigation frequency for sensitive crops.");
+    if (temp > 35) {
+      advice.push("🌡️ High temperature alert. Provide shade to livestock and increase irrigation frequency.");
+      advice.push("💦 Consider heat-resistant varieties for cotton and sugarcane crops.");
     }
     
-    if (humidity > 75) {
-      advice.push("🍄 Monitor for pest and disease outbreaks.");
-      advice.push("🌿 Ensure proper ventilation for greenhouse crops.");
+    if (humidity > 80) {
+      advice.push("🍄 High humidity may cause blast in paddy. Apply preventive fungicide spray.");
+      advice.push("🌿 Monitor wheat crops for rust diseases during this weather.");
+    }
+    
+    if (temp < 15) {
+      advice.push("❄️ Cold wave conditions. Protect sugarcane and citrus crops from frost damage.");
+      advice.push("🔥 Light up smudge pots in citrus orchards during night hours.");
     }
     
     return advice;
@@ -54,40 +64,40 @@ export default function Weather() {
     const humidity = current.main.humidity;
     const windSpeed = current.wind.speed;
 
-    // Temperature alerts
-    if (temp > 35) {
+    // Temperature alerts specific to Punjab crops
+    if (temp > 40) {
       newAlerts.push({
         type: "warning",
         icon: "🌡️",
-        title: "High Temperature Alert",
-        message: "Extreme heat detected. Ensure adequate irrigation and consider heat-resistant crops."
+        title: "Extreme Heat Alert",
+        message: "Extreme heat may damage wheat in grain filling stage. Provide emergency irrigation."
       });
-    } else if (temp < 10) {
+    } else if (temp < 5) {
       newAlerts.push({
-        type: "info",
+        type: "warning",
         icon: "❄️",
-        title: "Cold Weather Alert",
-        message: "Low temperatures may affect crop growth. Protect sensitive plants."
+        title: "Frost Alert",
+        message: "Frost warning for Punjab. Protect potato, sugarcane and citrus crops immediately."
       });
     }
 
     // Humidity alerts
-    if (humidity > 80) {
+    if (humidity > 85) {
       newAlerts.push({
         type: "warning",
         icon: "💧",
-        title: "High Humidity Alert",
-        message: "High humidity may increase disease risk. Monitor crops for fungal infections."
+        title: "Disease Risk Alert",
+        message: "High humidity increases blast risk in paddy and rust in wheat. Apply fungicides."
       });
     }
 
     // Wind alerts
-    if (windSpeed > 10) {
+    if (windSpeed > 15) {
       newAlerts.push({
         type: "warning",
         icon: "💨",
         title: "Strong Wind Alert",
-        message: "Strong winds detected. Secure tall crops and check for physical damage."
+        message: "Strong winds may cause lodging in wheat and paddy. Harvest mature crops immediately."
       });
     }
 
@@ -100,8 +110,8 @@ export default function Weather() {
       newAlerts.push({
         type: "success",
         icon: "🌧️",
-        title: "Rain Forecast",
-        message: "Rain expected in next 24 hours. Good time for planting and natural irrigation."
+        title: "Monsoon Update",
+        message: "Rain expected in 24 hours. Good for kharif sowing. Postpone wheat harvesting."
       });
     }
 
@@ -126,7 +136,7 @@ export default function Weather() {
       generateFarmingAlerts(currentResponse.data, forecastResponse.data);
       
     } catch (err) {
-      setError("Unable to fetch weather data. Please try again.");
+      setError("Unable to fetch weather data for Punjab district. Please try again.");
       setWeather(null);
       setForecast(null);
       setAlerts([]);
@@ -168,8 +178,8 @@ export default function Weather() {
     return (
       <div className="max-w-6xl mx-auto p-6">
         <div className="flex items-center justify-center h-64">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-          <span className="ml-4 text-lg">Loading weather data...</span>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600"></div>
+          <span className="ml-4 text-lg">Loading Punjab weather data...</span>
         </div>
       </div>
     );
@@ -178,8 +188,8 @@ export default function Weather() {
   return (
     <div className="max-w-6xl mx-auto p-6">
       <div className="text-center mb-8">
-        <h1 className="text-4xl font-bold text-gray-800 mb-4">🌤️ Smart Weather Dashboard</h1>
-        <p className="text-lg text-gray-600">Advanced weather insights for smart farming decisions</p>
+        <h1 className="text-4xl font-bold text-gray-800 mb-4">🌤️ Punjab Weather Dashboard</h1>
+        <p className="text-lg text-gray-600">Advanced weather insights for smart farming decisions across Punjab's 22 districts</p>
       </div>
 
       {/* City Selection */}
@@ -188,7 +198,7 @@ export default function Weather() {
           <select
             value={city}
             onChange={(e) => setCity(e.target.value)}
-            className="flex-1 border rounded-lg px-4 py-3 text-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="flex-1 border rounded-lg px-4 py-3 text-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
           >
             {districts.map(district => (
               <option key={district} value={district}>{district}</option>
@@ -197,7 +207,7 @@ export default function Weather() {
           <button
             type="submit"
             disabled={loading}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors disabled:opacity-50"
+            className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors disabled:opacity-50"
           >
             {loading ? "Loading..." : "Get Weather"}
           </button>
@@ -214,11 +224,11 @@ export default function Weather() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Current Weather */}
           <div className="lg:col-span-2">
-            <div className="bg-gradient-to-br from-blue-500 to-purple-600 text-white rounded-lg p-6 mb-6">
+            <div className="bg-gradient-to-br from-green-500 to-blue-600 text-white rounded-lg p-6 mb-6">
               <div className="flex items-center justify-between mb-4">
                 <div>
-                  <h2 className="text-2xl font-bold">{weather.name}</h2>
-                  <p className="text-blue-100">{new Date().toLocaleDateString('en-US', { 
+                  <h2 className="text-2xl font-bold">{weather.name}, Punjab</h2>
+                  <p className="text-green-100">{new Date().toLocaleDateString('en-US', { 
                     weekday: 'long', 
                     year: 'numeric', 
                     month: 'long', 
@@ -233,7 +243,7 @@ export default function Weather() {
               <div className="flex items-center justify-between">
                 <div>
                   <div className="text-4xl font-bold">{Math.round(weather.main.temp)}°C</div>
-                  <div className="text-blue-100 capitalize">{weather.weather[0].description}</div>
+                  <div className="text-green-100 capitalize">{weather.weather[0].description}</div>
                 </div>
                 <div className="text-right">
                   <div className="text-sm">Feels like {Math.round(weather.main.feels_like)}°C</div>
@@ -246,7 +256,7 @@ export default function Weather() {
             {/* 5-Day Forecast */}
             {forecast && (
               <div className="bg-white rounded-lg shadow-lg p-6">
-                <h3 className="text-xl font-bold mb-4">📅 5-Day Forecast</h3>
+                <h3 className="text-xl font-bold mb-4">📅 5-Day Punjab Weather Forecast</h3>
                 <div className="grid grid-cols-5 gap-4">
                   {forecast.list.filter((_, index) => index % 8 === 0).slice(0, 5).map((day, index) => (
                     <div key={index} className="text-center p-3 rounded-lg bg-gray-50">
@@ -266,7 +276,7 @@ export default function Weather() {
             {/* Farming Alerts */}
             {alerts.length > 0 && (
               <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-                <h3 className="text-lg font-bold mb-4">🚨 Farming Alerts</h3>
+                <h3 className="text-lg font-bold mb-4">🚨 Punjab Farming Alerts</h3>
                 <div className="space-y-3">
                   {alerts.map((alert, index) => (
                     <div key={index} className={`p-3 rounded-lg border-l-4 ${
@@ -289,7 +299,7 @@ export default function Weather() {
 
             {/* Farming Advice */}
             <div className="bg-white rounded-lg shadow-lg p-6">
-              <h3 className="text-lg font-bold mb-4">💡 Farming Tips</h3>
+              <h3 className="text-lg font-bold mb-4">💡 Punjab Farming Tips</h3>
               <div className="space-y-2">
                 {farmingAdvice.map((tip, index) => (
                   <div key={index} className="text-sm p-2 bg-green-50 rounded border-l-2 border-green-400">
@@ -304,5 +314,3 @@ export default function Weather() {
     </div>
   );
 }
-
-

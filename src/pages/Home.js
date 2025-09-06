@@ -4,61 +4,61 @@ import { Link } from "react-router-dom";
 export default function Home() {
   const features = [
     {
-      icon: "🌱",
+      icon: "🌾",
       title: "AI-Powered Crop Recommendations",
-      description: "Get personalized crop suggestions based on your soil, weather, and farming conditions using advanced AI algorithms."
+      description: "Get personalized crop suggestions for wheat, paddy, cotton and other Punjab crops using advanced AI algorithms and local climate data."
     },
     {
       icon: "🌤️",
       title: "Real-Time Weather Integration",
-      description: "Access live weather data and harvest-time weather predictions to make informed farming decisions."
+      description: "Access live weather data and monsoon predictions crucial for Punjab's wheat-paddy rotation and cotton cultivation timing."
     },
     {
       icon: "💰",
       title: "Market Price Analysis",
-      description: "View current market prices, investment requirements, and expected returns for different crops."
+      description: "View MSP rates, mandi prices, and expected returns for major Punjab crops with direct market linkage information."
     },
     {
       icon: "📊",
       title: "District-Specific Insights",
-      description: "Tailored recommendations for all 24 districts of Jharkhand based on local agricultural patterns."
+      description: "Tailored recommendations for all 22 districts of Punjab based on agro-climatic zones and local farming practices."
     },
     {
       icon: "🔄",
       title: "Crop Rotation Planning",
-      description: "Smart suggestions for crop rotation to maintain soil health and maximize productivity."
+      description: "Smart suggestions for wheat-paddy rotation and crop diversification to maintain soil health and reduce input costs."
     },
     {
       icon: "📅",
       title: "Seasonal Planning",
-      description: "Complete planting and harvesting calendar with optimal timing for each crop variety."
+      description: "Complete rabi and kharif season planning with optimal sowing dates for maximum yield in Punjab's climate."
     }
   ];
 
   const stats = [
-    { number: "50+", label: "Crop Varieties", icon: "🌾" },
-    { number: "24", label: "Districts Covered", icon: "📍" },
+    { number: "15+", label: "Major Crops", icon: "🌾" },
+    { number: "22", label: "Districts Covered", icon: "📍" },
     { number: "95%", label: "Accuracy Rate", icon: "🎯" }
   ];
 
   const testimonials = [
     {
-      name: "Ramesh Kumar",
-      location: "Ranchi",
-      text: "This platform helped me increase my farm yield by 40%. The weather predictions are very accurate!",
-      crop: "Paddy & Wheat"
+      name: "Harjeet Singh",
+      location: "Ludhiana",
+      text: "This platform helped me increase my wheat yield by 30%. The weather predictions are very accurate for Punjab's climate!",
+      crop: "Wheat & Paddy"
     },
     {
-      name: "Sunita Devi", 
-      location: "Bokaro",
-      text: "I started growing turmeric based on the recommendation. Now I earn ₹80,000 more per season!",
-      crop: "Turmeric & Vegetables"
+      name: "Simran Kaur", 
+      location: "Bathinda",
+      text: "Started cotton farming based on recommendations. Now I earn ₹1,20,000 more per season with better varieties!",
+      crop: "Cotton & Mustard"
     },
     {
-      name: "Manoj Singh",
-      location: "Hazaribagh", 
-      text: "The market price information helps me decide when to sell. Very useful for planning.",
-      crop: "Mustard & Gram"
+      name: "Ranjit Singh",
+      location: "Amritsar", 
+      text: "The market price information helps me get better rates for my basmati. Very useful for export quality planning.",
+      crop: "Basmati Rice"
     }
   ];
 
@@ -68,18 +68,18 @@ export default function Home() {
       <section className="bg-gradient-to-r from-green-600 to-green-700 text-white py-20">
         <div className="max-w-6xl mx-auto px-6 text-center">
           <h1 className="text-5xl md:text-6xl font-bold mb-6">
-            Welcome to Jharkhand's Smart Farming Portal!
+            Welcome to Punjab's Smart Farming Portal!
           </h1>
           <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto leading-relaxed">
-            Get expert crop advice powered by AI, real-time weather data, and local agricultural insights. 
-            Make informed decisions and boost your farm productivity.
+            Get expert crop advice powered by AI, real-time weather data, and local agricultural insights for Punjab's intensive farming system. 
+            Make informed decisions and boost your farm productivity in India's granary.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link 
               to="/crops" 
               className="bg-yellow-400 hover:bg-yellow-300 text-green-800 font-bold py-4 px-8 rounded-lg text-lg transition-all transform hover:scale-105"
             >
-              🌱 Get Crop Recommendations
+              🌾 Get Crop Recommendations
             </Link>
             <Link 
               to="/weather" 
@@ -114,7 +114,7 @@ export default function Home() {
               Why Choose Our Platform?
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Comprehensive farming solutions designed specifically for Jharkhand's unique agricultural landscape
+              Comprehensive farming solutions designed specifically for Punjab's intensive agricultural system and wheat-paddy economy
             </p>
           </div>
           
@@ -137,24 +137,24 @@ export default function Home() {
             <h2 className="text-4xl font-bold text-gray-800 mb-4">
               How It Works
             </h2>
-            <p className="text-xl text-gray-600">Simple steps to get personalized crop recommendations</p>
+            <p className="text-xl text-gray-600">Simple steps to get personalized crop recommendations for Punjab</p>
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center">
               <div className="bg-green-600 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">1</div>
               <h3 className="text-xl font-bold mb-3">Enter Your Details</h3>
-              <p className="text-gray-600">Provide information about your district, soil type, farm size, and available resources</p>
+              <p className="text-gray-600">Provide information about your district, soil type, farm size, and irrigation facilities available</p>
             </div>
             <div className="text-center">
               <div className="bg-green-600 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">2</div>
               <h3 className="text-xl font-bold mb-3">AI Analysis</h3>
-              <p className="text-gray-600">Our AI system analyzes weather patterns, soil conditions, and market trends</p>
+              <p className="text-gray-600">Our AI system analyzes Punjab's weather patterns, soil conditions, MSP rates and market trends</p>
             </div>
             <div className="text-center">
               <div className="bg-green-600 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">3</div>
               <h3 className="text-xl font-bold mb-3">Get Recommendations</h3>
-              <p className="text-gray-600">Receive personalized crop suggestions with planting schedules and profit estimates</p>
+              <p className="text-gray-600">Receive personalized crop suggestions with sowing schedules, variety selection and profit estimates</p>
             </div>
           </div>
         </div>
@@ -193,7 +193,7 @@ export default function Home() {
             Ready to Transform Your Farming?
           </h2>
           <p className="text-xl mb-8">
-            Join thousands of successful farmers in Jharkhand who are already using our platform
+            Join thousands of successful farmers in Punjab who are already using our platform to maximize their agricultural potential
           </p>
           <Link 
             to="/crops" 

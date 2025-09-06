@@ -19,8 +19,8 @@ export default function Navbar() {
         {/* Desktop Layout */}
         <div className="hidden md:flex justify-between items-center h-16">
           <Link to="/" className="flex items-center space-x-2">
-            <span className="text-2xl">🌱</span>
-            <span className="font-bold text-xl">Jharkhand Agriculture</span>
+            <span className="text-2xl">🌾</span>
+            <span className="font-bold text-xl">Punjab Agriculture</span>
           </Link>
           <div className="flex items-center space-x-4">
             {navLinks.map(link => (
@@ -43,8 +43,8 @@ export default function Navbar() {
         <div className="md:hidden py-4">
           {/* Logo on top */}
           <Link to="/" className="flex items-center justify-start space-x-2 mb-4 px-4">
-            <span className="text-2xl">🌱</span>
-            <span className="font-bold text-lg">Jharkhand Agriculture</span>
+            <span className="text-2xl">🌾</span>
+            <span className="font-bold text-lg">Punjab Agriculture</span>
           </Link>
 
           {/* Vertical Navigation Links */}
@@ -68,6 +68,5 @@ export default function Navbar() {
     </nav>
   );
 }
-
 
 

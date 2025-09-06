@@ -1,100 +1,213 @@
-// src/pages/CropRecommendations.jsx
 import React, { useState, useMemo } from "react";
-import { DISTRICTS, CROPS } from "../data/crops";
-import RecommendationsPanel from "../components/RecommendationsPanel";
-import CropRecommendationCard from "../components/CropRecommendationCard";
-
-// Map district to crop suitability (move to separate file if large)
-const DISTRICT_CROP_SUITABILITY = {
-  Ranchi: ["paddy", "maize", "wheat", "potato", "tomato", "turmeric", "ginger", "arhar", "finger_millet"],
-  Bokaro: ["paddy", "wheat", "maize", "potato", "mustard", "gram", "sunflower"],
-  Dhanbad: ["paddy", "wheat", "maize", "gram", "mustard", "onion", "groundnut"],
-  "East Singhbhum": ["paddy", "maize", "cotton", "groundnut", "sesame", "jute", "chilli"],
-  "West Singhbhum": ["paddy", "maize", "finger_millet", "niger", "turmeric", "pearl_millet"],
-  Hazaribagh: ["wheat", "gram", "mustard", "potato", "cabbage", "cauliflower", "groundnut"],
-  Giridih: ["wheat", "gram", "maize", "mustard", "groundnut", "sesame", "black_gram"],
-  Koderma: ["wheat", "gram", "mustard", "green_gram", "black_gram"],
-  Chatra: ["paddy", "wheat", "maize", "gram", "arhar", "potato"],
-  Palamu: ["paddy", "wheat", "maize", "arhar", "mustard", "gram", "potato"],
-  Latehar: ["paddy", "maize", "arhar", "mustard", "finger_millet", "turmeric"],
-  Lohardaga: ["paddy", "maize", "finger_millet", "turmeric", "ginger", "arhar"],
-  Gumla: ["paddy", "maize", "finger_millet", "potato", "tomato", "ginger"],
-  Simdega: ["paddy", "maize", "finger_millet", "turmeric", "arhar", "niger"],
-  Khunti: ["paddy", "maize", "potato", "tomato", "turmeric", "vegetables"],
-  "Saraikela-Kharsawan": ["paddy", "maize", "groundnut", "sesame", "vegetables"],
-  Deoghar: ["paddy", "wheat", "maize", "mustard", "gram", "vegetables"],
-  Dumka: ["paddy", "maize", "finger_millet", "niger", "black_gram", "vegetables"],
-  Jamtara: ["paddy", "wheat", "maize", "gram", "mustard"],
-  Godda: ["paddy", "wheat", "maize", "mustard", "jute", "vegetables"],
-  Pakur: ["paddy", "maize", "finger_millet", "vegetables", "spices"],
-  Sahebganj: ["paddy", "wheat", "maize", "mustard", "jute", "sugarcane"],
-};
+import { DISTRICTS, CROPS, DISTRICT_CROP_SUITABILITY } from "../data/crops";
 
 export default function CropRecommendations() {
-  // Filter state
-  const [filters, setFilters] = useState({
-    district: { label: "District", value: "", options: DISTRICTS },
-    soilType: { label: "Soil Type", value: "", options: Array.from(new Set(CROPS.flatMap(c => c.soil))) },
-    waterSource: { label: "Water Source", value: "", options: ["low", "medium", "high"] },
-    duration: { label: "Duration", value: "", options: ["2-3 months", "3-4 months", "4-6 months", "6+ months"] },
-    previousCrop: { label: "Previous Crop", value: "", options: CROPS.map(c => c.name) },
-    budget: { label: "Budget", value: "", options: [] } // populate if you have ranges
-  });
+  const [district, setDistrict] = useState("");
+  const [soilType, setSoilType] = useState("");
+  const [waterSource, setWaterSource] = useState("");
+  const [season, setSeason] = useState("");
+  const [budget, setBudget] = useState("");
 
-  // Update filter handler
-  const onFilterChange = (key, value) => {
-    if (key === "reset") {
-      // Reset all
-      setFilters(Object.fromEntries(
-        Object.entries(filters).map(([k,f]) => [k, { ...f, value: "" }])
-      ));
-    } else {
-      setFilters(prev => ({
-        ...prev,
-        [key]: { ...prev[key], value }
-      }));
+  // Get unique soil types from crops
+  const soilTypes = useMemo(() => 
+    Array.from(new Set(CROPS.flatMap(crop => crop.soil))), []
+  );
+
+  // Filter recommendations
+  const recommendations = useMemo(() => {
+    let filtered = [...CROPS];
+
+    // Filter by district suitability
+    if (district && DISTRICT_CROP_SUITABILITY[district]) {
+      const suitableCropIds = DISTRICT_CROP_SUITABILITY[district];
+      filtered = filtered.filter(crop => suitableCropIds.includes(crop.id));
     }
-  };
 
-  // Apply filters
-  const filteredCrops = useMemo(() => {
-    return CROPS.filter(crop => {
-      return Object.entries(filters).every(([key, { value }]) => {
-        if (!value) return true;
-        if (key === "district") {
-          const suitable = DISTRICT_CROP_SUITABILITY[value] || [];
-          return suitable.includes(crop.id);
-        }
-        if (key === "soilType") return crop.soil.includes(value);
-        if (key === "waterSource") return crop.water === value;
-        if (key === "duration") {
-          const [min, max] = value.split("-").map(n => Number(n));
-          return crop.growingDuration >= min && crop.growingDuration <= max;
-        }
-        if (key === "previousCrop") return crop.name !== value;
-        // budget filter logic...
-        return true;
-      });
-    });
-  }, [filters]);
+    // Filter by soil type
+    if (soilType) {
+      filtered = filtered.filter(crop => crop.soil.includes(soilType));
+    }
+
+    // Filter by water source
+    if (waterSource) {
+      const waterMap = {
+        "canal": ["high", "medium"],
+        "tubewell": ["high", "medium", "low"],
+        "rainwater": ["low"]
+      };
+      if (waterMap[waterSource]) {
+        filtered = filtered.filter(crop => waterMap[waterSource].includes(crop.water));
+      }
+    }
+
+    // Filter by season
+    if (season) {
+      filtered = filtered.filter(crop => 
+        crop.seasons.includes(season) || 
+        crop.seasons.includes("annual") || 
+        crop.seasons.includes("perennial")
+      );
+    }
+
+    // Filter by budget
+    if (budget) {
+      const budgetRanges = {
+        "low": 25000,
+        "medium": 50000,
+        "high": Infinity
+      };
+      filtered = filtered.filter(crop => crop.investment <= budgetRanges[budget]);
+    }
+
+    // Sort by potential returns
+    return filtered.sort((a, b) => (b.avgYield * 2000) - (a.avgYield * 2000));
+  }, [district, soilType, waterSource, season, budget]);
 
   return (
-    <div className="flex flex-col lg:flex-row gap-8 max-w-7xl mx-auto p-6">
-      {/* Filter Panel */}
-      <div className="lg:w-1/4">
-        <RecommendationsPanel
-          filters={filters}
-          onFilterChange={onFilterChange}
-          totalCrops={CROPS.length}
-          visibleCrops={filteredCrops.length}
-        />
+    <div className="max-w-7xl mx-auto p-6">
+      <div className="text-center mb-8">
+        <h1 className="text-4xl font-bold text-gray-800 mb-4">
+          🌾 Smart Crop Recommendations for Punjab
+        </h1>
+        <p className="text-lg text-gray-600">
+          Get AI-powered crop suggestions based on your farming conditions and Punjab's agro-climatic zones
+        </p>
       </div>
 
-      {/* Recommendation Cards */}
-      <div className="lg:w-3/4 grid grid-cols-1 md:grid-cols-2 gap-8">
-        {filteredCrops.map(crop => (
-          <CropRecommendationCard key={crop.id} crop={crop} />
-        ))}
+      {/* Filters */}
+      <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          <div>
+            <label className="block text-sm font-medium mb-2">District</label>
+            <select
+              value={district}
+              onChange={(e) => setDistrict(e.target.value)}
+              className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-500"
+            >
+              <option value="">Select District</option>
+              {DISTRICTS.map(d => (
+                <option key={d} value={d}>{d}</option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-2">Soil Type</label>
+            <select
+              value={soilType}
+              onChange={(e) => setSoilType(e.target.value)}
+              className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-500"
+            >
+              <option value="">Select Soil Type</option>
+              {soilTypes.map(soil => (
+                <option key={soil} value={soil}>{soil}</option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-2">Water Source</label>
+            <select
+              value={waterSource}
+              onChange={(e) => setWaterSource(e.target.value)}
+              className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-500"
+            >
+              <option value="">Select Water Source</option>
+              <option value="canal">Canal Irrigation</option>
+              <option value="tubewell">Tubewell</option>
+              <option value="rainwater">Rainwater</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-2">Season</label>
+            <select
+              value={season}
+              onChange={(e) => setSeason(e.target.value)}
+              className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-500"
+            >
+              <option value="">Select Season</option>
+              <option value="rabi">Rabi (Winter)</option>
+              <option value="kharif">Kharif (Monsoon)</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-2">Budget</label>
+            <select
+              value={budget}
+              onChange={(e) => setBudget(e.target.value)}
+              className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-500"
+            >
+              <option value="">Select Budget</option>
+              <option value="low">Low (< ₹25,000/acre)</option>
+              <option value="medium">Medium (₹25,000-50,000/acre)</option>
+              <option value="high">High (> ₹50,000/acre)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      {/* Results */}
+      <div className="mb-6">
+        <h2 className="text-2xl font-bold mb-4">
+          Recommended Crops ({recommendations.length} found)
+        </h2>
+        {recommendations.length === 0 ? (
+          <div className="text-center py-12 bg-gray-50 rounded-lg">
+            <p className="text-gray-600 mb-4">No crops found matching your criteria</p>
+            <p className="text-sm text-gray-500">Try adjusting your filters above</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {recommendations.map((crop, index) => (
+              <div key={crop.id} className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
+                {index < 3 && (
+                  <div className="mb-2">
+                    <span className="bg-green-500 text-white text-xs px-2 py-1 rounded-full">
+                      Top {index + 1} Pick
+                    </span>
+                  </div>
+                )}
+                
+                <h3 className="text-xl font-bold mb-2">{crop.name}</h3>
+                
+                <div className="flex gap-2 mb-4">
+                  <span className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">
+                    {crop.type}
+                  </span>
+                  <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">
+                    {crop.seasons.join(", ")}
+                  </span>
+                </div>
+
+                <div className="space-y-2 mb-4 text-sm">
+                  <div><strong>Yield:</strong> {crop.avgYield} q/acre</div>
+                  <div><strong>Duration:</strong> {crop.growingDuration} months</div>
+                  <div><strong>Investment:</strong> ₹{crop.investment.toLocaleString()}/acre</div>
+                  <div><strong>Market Price:</strong> {crop.marketPrice}</div>
+                </div>
+
+                <div className="mb-4">
+                  <strong className="text-sm">Varieties:</strong>
+                  <div className="flex flex-wrap gap-1 mt-1">
+                    {crop.varieties.map(variety => (
+                      <span key={variety} className="bg-gray-100 text-xs px-2 py-1 rounded">
+                        {variety}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <p className="text-sm text-gray-600 mb-4">{crop.notes}</p>
+
+                <button className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition-colors">
+                  Get Detailed Guide
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

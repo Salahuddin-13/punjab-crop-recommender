@@ -1,66 +1,63 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 
 export default function Home() {
-  const { t } = useTranslation();
-
   const features = [
     {
       icon: "🌱",
-      title: t('feature_ai_title'),
-      description: t('feature_ai_description')
+      title: "AI-Powered Crop Recommendations",
+      description: "Get personalized crop suggestions based on your soil, weather, and farming conditions using advanced AI algorithms."
     },
     {
       icon: "🌤️",
-      title: t('feature_weather_title'),
-      description: t('feature_weather_description')
+      title: "Real-Time Weather Integration",
+      description: "Access live weather data and harvest-time weather predictions to make informed farming decisions."
     },
     {
       icon: "💰",
-      title: t('feature_market_title'),
-      description: t('feature_market_description')
+      title: "Market Price Analysis",
+      description: "View current market prices, investment requirements, and expected returns for different crops."
     },
     {
       icon: "📊",
-      title: t('feature_district_title'),
-      description: t('feature_district_description')
+      title: "District-Specific Insights",
+      description: "Tailored recommendations for all 24 districts of Jharkhand based on local agricultural patterns."
     },
     {
       icon: "🔄",
-      title: t('feature_rotation_title'),
-      description: t('feature_rotation_description')
+      title: "Crop Rotation Planning",
+      description: "Smart suggestions for crop rotation to maintain soil health and maximize productivity."
     },
     {
       icon: "📅",
-      title: t('feature_seasonal_title'),
-      description: t('feature_seasonal_description')
+      title: "Seasonal Planning",
+      description: "Complete planting and harvesting calendar with optimal timing for each crop variety."
     }
   ];
 
   const stats = [
-    { number: "50+", label: t('stat_crop_varieties'), icon: "🌾" },
-    { number: "24", label: t('stat_districts'), icon: "📍" },
-    { number: "95%", label: t('stat_accuracy'), icon: "🎯" }
+    { number: "50+", label: "Crop Varieties", icon: "🌾" },
+    { number: "24", label: "Districts Covered", icon: "📍" },
+    { number: "95%", label: "Accuracy Rate", icon: "🎯" }
   ];
 
   const testimonials = [
     {
       name: "Ramesh Kumar",
       location: "Ranchi",
-      text: t('testimonial_1'),
+      text: "This platform helped me increase my farm yield by 40%. The weather predictions are very accurate!",
       crop: "Paddy & Wheat"
     },
     {
       name: "Sunita Devi", 
       location: "Bokaro",
-      text: t('testimonial_2'),
+      text: "I started growing turmeric based on the recommendation. Now I earn ₹80,000 more per season!",
       crop: "Turmeric & Vegetables"
     },
     {
       name: "Manoj Singh",
       location: "Hazaribagh", 
-      text: t('testimonial_3'),
+      text: "The market price information helps me decide when to sell. Very useful for planning.",
       crop: "Mustard & Gram"
     }
   ];
@@ -71,23 +68,24 @@ export default function Home() {
       <section className="bg-gradient-to-r from-green-600 to-green-700 text-white py-20">
         <div className="max-w-6xl mx-auto px-6 text-center">
           <h1 className="text-5xl md:text-6xl font-bold mb-6">
-            {t('hero_title')}
+            Welcome to Jharkhand's Smart Farming Portal!
           </h1>
           <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto leading-relaxed">
-            {t('hero_subtitle')}
+            Get expert crop advice powered by AI, real-time weather data, and local agricultural insights. 
+            Make informed decisions and boost your farm productivity.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link 
               to="/crops" 
               className="bg-yellow-400 hover:bg-yellow-300 text-green-800 font-bold py-4 px-8 rounded-lg text-lg transition-all transform hover:scale-105"
             >
-              🌱 {t('btn_get_recommendations')}
+              🌱 Get Crop Recommendations
             </Link>
             <Link 
               to="/weather" 
               className="bg-transparent border-2 border-white hover:bg-white hover:text-green-700 font-bold py-4 px-8 rounded-lg text-lg transition-all"
             >
-              🌤️ {t('btn_check_weather')}
+              🌤️ Check Weather
             </Link>
           </div>
         </div>
@@ -113,10 +111,10 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-gray-800 mb-4">
-              {t('features_heading')}
+              Why Choose Our Platform?
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              {t('features_subheading')}
+              Comprehensive farming solutions designed specifically for Jharkhand's unique agricultural landscape
             </p>
           </div>
           
@@ -137,26 +135,26 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-gray-800 mb-4">
-              {t('how_it_works_heading')}
+              How It Works
             </h2>
-            <p className="text-xl text-gray-600">{t('how_it_works_subheading')}</p>
+            <p className="text-xl text-gray-600">Simple steps to get personalized crop recommendations</p>
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center">
               <div className="bg-green-600 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">1</div>
-              <h3 className="text-xl font-bold mb-3">{t('step_1_title')}</h3>
-              <p className="text-gray-600">{t('step_1_description')}</p>
+              <h3 className="text-xl font-bold mb-3">Enter Your Details</h3>
+              <p className="text-gray-600">Provide information about your district, soil type, farm size, and available resources</p>
             </div>
             <div className="text-center">
               <div className="bg-green-600 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">2</div>
-              <h3 className="text-xl font-bold mb-3">{t('step_2_title')}</h3>
-              <p className="text-gray-600">{t('step_2_description')}</p>
+              <h3 className="text-xl font-bold mb-3">AI Analysis</h3>
+              <p className="text-gray-600">Our AI system analyzes weather patterns, soil conditions, and market trends</p>
             </div>
             <div className="text-center">
               <div className="bg-green-600 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">3</div>
-              <h3 className="text-xl font-bold mb-3">{t('step_3_title')}</h3>
-              <p className="text-gray-600">{t('step_3_description')}</p>
+              <h3 className="text-xl font-bold mb-3">Get Recommendations</h3>
+              <p className="text-gray-600">Receive personalized crop suggestions with planting schedules and profit estimates</p>
             </div>
           </div>
         </div>
@@ -167,9 +165,9 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-gray-800 mb-4">
-              {t('testimonials_heading')}
+              Success Stories
             </h2>
-            <p className="text-xl text-gray-600">{t('testimonials_subheading')}</p>
+            <p className="text-xl text-gray-600">Hear from farmers who transformed their agriculture with our platform</p>
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
@@ -192,16 +190,16 @@ export default function Home() {
       <section className="py-20 bg-gradient-to-r from-green-600 to-green-700 text-white">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <h2 className="text-4xl font-bold mb-6">
-            {t('cta_heading')}
+            Ready to Transform Your Farming?
           </h2>
           <p className="text-xl mb-8">
-            {t('cta_subheading')}
+            Join thousands of successful farmers in Jharkhand who are already using our platform
           </p>
           <Link 
             to="/crops" 
             className="bg-yellow-400 hover:bg-yellow-300 text-green-800 font-bold py-4 px-8 rounded-lg text-lg transition-all transform hover:scale-105 inline-block"
           >
-            {t('btn_start_journey')} →
+            Start Your Journey Today →
           </Link>
         </div>
       </section>

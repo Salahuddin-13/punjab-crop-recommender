@@ -1,0 +1,107 @@
+[33mcommit eba6312ef0daaf675845b49561dd54a17f177724[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: Salahuddin-13 <salahuddinmohammed475@gmail.com>
+Date:   Sat Sep 6 10:39:59 2025 +0530
+
+    Improve weather page loading performance and UX
+
+[33mcommit 4b8b3660580c2c90273852aa3a2769a78d872a98[m
+Author: Salahuddin-13 <salahuddinmohammed475@gmail.com>
+Date:   Sat Sep 6 10:29:24 2025 +0530
+
+    Fix navbar to show vertical links on mobile for better visibility
+
+[33mcommit 7a6a2ea17483462e98ce84de2b5614e473f1d42e[m
+Author: Salahuddin-13 <salahuddinmohammed475@gmail.com>
+Date:   Sat Sep 6 07:49:22 2025 +0530
+
+    Clean package-lock and remove any cached i18n dependencies
+
+[33mcommit cf1a50659c16b988202164bba0798fe540e0b658[m
+Author: Salahuddin-13 <salahuddinmohammed475@gmail.com>
+Date:   Sat Sep 6 07:25:46 2025 +0530
+
+    Revert Home page to original hard-coded text version and remove i18n usage
+
+[33mcommit 949596f2884e7899eb41a4fb6d0047d4a1809e26[m
+Author: Salahuddin-13 <salahuddinmohammed475@gmail.com>
+Date:   Sat Sep 6 07:18:37 2025 +0530
+
+    Fix duplicate footer issue
+
+[33mcommit 00e4d34a6db7e835a18e11ef60926991bea3ee58[m
+Author: Salahuddin-13 <salahuddinmohammed475@gmail.com>
+Date:   Sat Sep 6 06:30:57 2025 +0530
+
+    Fix duplicate footer issue
+
+[33mcommit ad5b8efd2b0a55df05f0aace5169121e854387c6[m
+Author: Salahuddin-13 <salahuddinmohammed475@gmail.com>
+Date:   Sat Sep 6 06:21:39 2025 +0530
+
+    Fix mobile navbar overlap, add scroll to top, and update footer with credit
+
+[33mcommit de78bba890ac94b67c7e6d5143f9482054bd2264[m
+Author: Salahuddin-13 <salahuddinmohammed475@gmail.com>
+Date:   Sat Sep 6 06:10:01 2025 +0530
+
+    Fix mobile navbar overlap, add scroll to top, and update footer with credit
+
+[33mcommit 16a435b0cafcd598628fb3803749377f43d9b734[m
+Author: Salahuddin-13 <salahuddinmohammed475@gmail.com>
+Date:   Fri Sep 5 19:19:02 2025 +0530
+
+    Fix serve command for Windows compatibility
+
+[33mcommit 3f1e24a064f75e212f83a70e30b5b40a6ddc51f2[m
+Author: Salahuddin-13 <salahuddinmohammed475@gmail.com>
+Date:   Fri Sep 5 19:15:34 2025 +0530
+
+    Update package.json with cross-platform scripts and serve dependency
+
+[33mcommit e82acfebb6e574f8e9a17dbe14e2dc9739a5e790[m
+Author: Salahuddin-13 <salahuddinmohammed475@gmail.com>
+Date:   Fri Sep 5 19:04:41 2025 +0530
+
+    Add _redirects file for React Router support
+
+[33mcommit 69b586e45f33bad47e95e89ae1c6a501d1d6fbce[m
+Author: Salahuddin-13 <salahuddinmohammed475@gmail.com>
+Date:   Fri Sep 5 19:00:21 2025 +0530
+
+    Add deployment configuration for Render
+
+[33mcommit 6ed1b39192ae60553a801ef3bc458e67e01d5651[m
+Author: Salahuddin-13 <salahuddinmohammed475@gmail.com>
+Date:   Fri Sep 5 14:43:14 2025 +0530
+
+    Add Weather page with OpenWeather API integration
+
+[33mcommit 958dafb17b6911a66cc3329d974b3300c203f09f[m
+Author: Salahuddin-13 <salahuddinmohammed475@gmail.com>
+Date:   Fri Sep 5 13:59:48 2025 +0530
+
+    Force page title update
+
+[33mcommit 53f288f386b0ea0fdc552aef73b347659cf7fcca[m
+Author: Salahuddin-13 <salahuddinmohammed475@gmail.com>
+Date:   Fri Sep 5 12:19:56 2025 +0530
+
+    Add custom favicon
+
+[33mcommit 981ecb4079aec1de248e7bde2e895166c881a74e[m
+Author: Salahuddin-13 <salahuddinmohammed475@gmail.com>
+Date:   Fri Sep 5 12:10:47 2025 +0530
+
+    Update home page style and text
+
+[33mcommit 2e306da93cc80c132ec809db9fc5b63bb2f76489[m
+Author: Salahuddin-13 <salahuddinmohammed475@gmail.com>
+Date:   Thu Sep 4 23:19:20 2025 +0530
+
+    Initial commit: multi-page site with crop recommendations
+
+[33mcommit 844af965ee77b72469e0a709f244bfc10e43e5a2[m
+Author: Salahuddin-13 <salahuddinmohammed475@gmail.com>
+Date:   Thu Sep 4 22:52:58 2025 +0530
+
+    Initialize project using Create React App

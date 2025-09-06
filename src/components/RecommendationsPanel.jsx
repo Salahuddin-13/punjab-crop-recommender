@@ -1,54 +1,72 @@
-// src/components/RecommendationsPanel.jsx
 import React from "react";
 
-export default function RecommendationsPanel({
-  filters,
-  onFilterChange,
-  totalCrops,
-  visibleCrops
-}) {
+export default function CropRecommendationCard({ crop }) {
+  // Simple month name conversion without date-fns
+  const getMonthName = (monthNumber) => {
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+                   "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    return months[monthNumber - 1];
+  };
+
+  // Compute profitability (simple formula)
+  const priceMatch = crop.marketPrice.match(/\d+/g);
+  const avgPrice = priceMatch ? Number(priceMatch[1] || priceMatch[0]) : 0;
+  const profit = (crop.avgYield * avgPrice) - crop.investment;
+
+  // Generate tips
+  const tips = [
+    `Plant ${crop.name} in ${crop.plantingMonths.map(m => getMonthName(m)).join(", ")}`,
+    crop.water === "high" 
+      ? "Ensure reliable irrigation or sow during monsoon"
+      : "Rely on rainwater; avoid water logging"
+  ];
+
   return (
-    <aside className="sticky top-16 bg-white p-6 rounded-lg shadow mb-8">
-      <h2 className="text-xl font-bold mb-4">Filter Your Recommendations</h2>
-      <div className="text-sm text-gray-600 mb-4">
-        Showing <span className="font-semibold">{visibleCrops}</span> of{" "}
-        <span className="font-semibold">{totalCrops}</span> crops
-      </div>
-
-      {Object.entries(filters).map(([key, { label, value, options }]) => (
-        <div key={key} className="mb-4">
-          <label className="block text-sm font-medium mb-1">{label}</label>
-          {options.length > 0 ? (
-            <select
-              value={value}
-              onChange={(e) => onFilterChange(key, e.target.value)}
-              className="w-full border rounded px-3 py-2"
-            >
-              <option value="">{`Any ${label}`}</option>
-              {options.map((opt) => (
-                <option key={opt} value={opt}>
-                  {opt}
-                </option>
-              ))}
-            </select>
-          ) : (
-            <input
-              type="text"
-              value={value}
-              onChange={(e) => onFilterChange(key, e.target.value)}
-              placeholder={`Enter ${label}`}
-              className="w-full border rounded px-3 py-2"
-            />
-          )}
+    <div className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition relative">
+      {profit > 0 && (
+        <div className="absolute top-3 right-3 bg-green-100 text-green-800 px-2 py-1 text-xs font-semibold rounded">
+          ₹{profit.toLocaleString()} profit
         </div>
-      ))}
-
-      <button
-        onClick={() => onFilterChange("reset")}
-        className="mt-2 text-sm text-red-600 hover:underline"
-      >
-        Reset Filters
-      </button>
-    </aside>
+      )}
+      
+      <h3 className="font-bold text-2xl mb-2">{crop.name}</h3>
+      
+      <div className="flex gap-2 text-sm mb-4">
+        <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded">{crop.type}</span>
+        <span className="bg-green-100 text-green-800 px-2 py-1 rounded">{crop.seasons.join(", ")}</span>
+      </div>
+      
+      <div className="grid grid-cols-2 gap-4 mb-4 text-sm">
+        <div><strong>Duration:</strong> {crop.growingDuration} months</div>
+        <div><strong>Yield:</strong> {crop.avgYield} q/acre</div>
+        <div><strong>Investment:</strong> ₹{crop.investment?.toLocaleString()}</div>
+        <div><strong>Price:</strong> {crop.marketPrice}</div>
+      </div>
+      
+      <div className="mb-4 text-sm">
+        <p><strong>Soils:</strong> {crop.soil.join(", ")}</p>
+        <p><strong>Water:</strong> {crop.water}</p>
+      </div>
+      
+      <div className="mb-4">
+        <strong className="text-sm">Varieties:</strong>
+        <div className="flex flex-wrap gap-2 mt-1">
+          {crop.varieties?.map(v => (
+            <span key={v} className="text-xs bg-gray-100 px-2 py-1 rounded">
+              {v}
+            </span>
+          ))}
+        </div>
+      </div>
+      
+      <div className="mb-4">
+        <strong className="text-sm">Tips:</strong>
+        <ul className="list-disc list-inside text-sm mt-1">
+          {tips.map((tip, i) => <li key={i}>{tip}</li>)}
+        </ul>
+      </div>
+      
+      
+    </div>
   );
 }

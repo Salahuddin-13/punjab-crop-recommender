@@ -36,18 +36,19 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
+
+            {/* Google Translate dropdown */}
+            <div id="google_translate_element" className="ml-4"></div>
           </div>
         </div>
 
-        {/* Mobile Layout - Visible Vertical */}
+        {/* Mobile Layout */}
         <div className="md:hidden py-4">
-          {/* Logo on top */}
           <Link to="/" className="flex items-center justify-start space-x-2 mb-4 px-4">
             <span className="text-2xl">🌾</span>
             <span className="font-bold text-lg">Punjab Agriculture</span>
           </Link>
 
-          {/* Vertical Navigation Links */}
           <div className="flex flex-col space-y-2 px-4">
             {navLinks.map(link => (
               <Link
@@ -63,10 +64,11 @@ export default function Navbar() {
               </Link>
             ))}
           </div>
+
+          {/* Mobile Google Translate */}
+          <div id="google_translate_element" className="mt-4 px-4"></div>
         </div>
       </div>
     </nav>
   );
 }
-
-

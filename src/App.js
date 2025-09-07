@@ -1,3 +1,4 @@
+// src/App.js
 import React, { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop";
@@ -9,20 +10,32 @@ import Calendar from "./pages/Calendar";
 import Resources from "./pages/Resources";
 import Profile from "./pages/Profile";
 import CropRecommendations from "./pages/CropRecommendations";
-import { HelmetProvider } from 'react-helmet-async'; // Import HelmetProvider
+import { HelmetProvider, Helmet } from "react-helmet-async"; 
+import { useTranslation } from "react-i18next";
 
 export default function App() {
+  const { t, i18n } = useTranslation();
+
+  // Update document title whenever language changes
   useEffect(() => {
-    document.title = "Punjab Agriculture - Smart Crop Recommender";
-  }, []);
+    document.title = t("welcome"); // you can make a specific translation key for the title
+  }, [i18n.language, t]);
 
   return (
-    <HelmetProvider> {/* Wrap your app */}
+    <HelmetProvider>
       <Router>
         <ScrollToTop />
         <div className="min-h-screen bg-slate-50 flex flex-col">
           <Navbar />
           <main className="flex-1 pt-4">
+            <Helmet>
+              {/* Dynamic <title> in browser tab */}
+              <title>{t("welcome")}</title>
+              <meta
+                name="description"
+                content={t("welcome")}
+              />
+            </Helmet>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/crops" element={<CropRecommendations />} />
@@ -38,3 +51,4 @@ export default function App() {
     </HelmetProvider>
   );
 }
+

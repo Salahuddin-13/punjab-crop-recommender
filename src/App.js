@@ -9,6 +9,7 @@ import Calendar from "./pages/Calendar";
 import Resources from "./pages/Resources";
 import Profile from "./pages/Profile";
 import CropRecommendations from "./pages/CropRecommendations";
+import { HelmetProvider } from 'react-helmet-async'; // Import HelmetProvider
 
 export default function App() {
   useEffect(() => {
@@ -16,22 +17,24 @@ export default function App() {
   }, []);
 
   return (
-    <Router>
-      <ScrollToTop />
-      <div className="min-h-screen bg-slate-50 flex flex-col">
-        <Navbar />
-        <main className="flex-1 pt-4">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/crops" element={<CropRecommendations />} />
-            <Route path="/weather" element={<Weather />} />
-            <Route path="/calendar" element={<Calendar />} />
-            <Route path="/resources" element={<Resources />} />
-            <Route path="/profile" element={<Profile />} />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
-    </Router>
+    <HelmetProvider> {/* Wrap your app */}
+      <Router>
+        <ScrollToTop />
+        <div className="min-h-screen bg-slate-50 flex flex-col">
+          <Navbar />
+          <main className="flex-1 pt-4">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/crops" element={<CropRecommendations />} />
+              <Route path="/weather" element={<Weather />} />
+              <Route path="/calendar" element={<Calendar />} />
+              <Route path="/resources" element={<Resources />} />
+              <Route path="/profile" element={<Profile />} />
+            </Routes>
+          </main>
+          <Footer />
+        </div>
+      </Router>
+    </HelmetProvider>
   );
 }

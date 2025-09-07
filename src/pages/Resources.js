@@ -4,14 +4,14 @@ import { University, Building, Microscope, Tractor, BookOpen, Phone, MapPin, Lin
 // --- Smart Resources Component for Punjab ---
 
 export default function Resources() {
-  const [activeTab, setActiveTab] = useState("schemes");
+  const [activeTab, setActiveTab] = useState("schemes");
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedDistrict, setSelectedDistrict] = useState("");
 
   // --- PUNJAB SPECIFIC DATA ---
   const districts = ["Amritsar", "Ludhiana", "Jalandhar", "Patiala", "Bathinda", "Gurdaspur", "Hoshiarpur", "Sangrur", "Khanna"];
 
-  const governmentSchemes = [
+  const governmentSchemes = [
     { 
         title: "PM-KISAN Samman Nidhi", 
         description: "A central scheme providing income support to all landholding farmer families.", 
@@ -44,9 +44,9 @@ export default function Resources() {
         link: "https://agrimachinery.nic.in/", 
         contact: "Contact District Agricultural Officer." 
     }
-  ];
+  ];
 
-  const marketInformation = [
+  const marketInformation = [
     { 
         market: "Khanna Mandi", 
         district: "Khanna", 
@@ -75,9 +75,9 @@ export default function Resources() {
         crops: ["Paddy", "Wheat", "Mustard"], 
         facilities: ["Drying Platforms", "Quality Testing Labs"] 
     }
-  ];
+  ];
 
-  const technicalSupport = [
+  const technicalSupport = [
     { 
         category: "University Support", 
         provider: "Punjab Agricultural University (PAU), Ludhiana", 
@@ -110,9 +110,9 @@ export default function Resources() {
         link: "https://www.pau.edu/index.php?_act=manage&_mod=weather", 
         district: "All" 
     }
-  ];
+  ];
 
-  const inputSuppliers = [
+  const inputSuppliers = [
     { 
         category: "Seeds & Fertilizers", 
         suppliers: [
@@ -129,7 +129,7 @@ export default function Resources() {
             { name: "State Agriculture Department", contact: "District offices", speciality: "Information on machinery subsidies." }
         ] 
     }
-  ];
+  ];
 
   const filteredContent = useMemo(() => {
     let content = [];
@@ -164,15 +164,15 @@ export default function Resources() {
     );
   }, [activeTab, searchTerm, selectedDistrict]);
 
-  return (
-    <div className="bg-gray-50 min-h-screen">
+  return (
+    <div className="bg-gray-50 min-h-screen">
     <div className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
-      <header className="text-center mb-10">
-        <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-800 flex items-center justify-center gap-3">
+      <header className="text-center mb-10">
+        <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-800 flex items-center justify-center gap-3">
             <Wheat className="text-green-600 w-12 h-12" /> Punjab Farmer's Resource Hub
         </h1>
-        <p className="mt-2 text-lg text-gray-600 max-w-2xl mx-auto">Your one-stop guide to schemes, markets, and support for agriculture in Punjab.</p>
-      </header>
+        <p className="mt-2 text-lg text-gray-600 max-w-2xl mx-auto">Your one-stop guide to schemes, markets, and support for agriculture in Punjab.</p>
+      </header>
 
       {/* Smart Controls */}
       <div className="bg-white p-4 rounded-xl shadow-lg border border-gray-200 mb-8 grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
@@ -199,7 +199,7 @@ export default function Resources() {
         </div>
       </div>
 
-      {/* Tab Navigation */}
+      {/* Tab Navigation */}
       <div className="flex flex-wrap items-center justify-center gap-2 mb-8">
         <button onClick={() => setActiveTab('schemes')} className={`px-4 py-2 rounded-full text-sm font-semibold flex items-center gap-2 transition-all ${activeTab === 'schemes' ? 'bg-green-600 text-white shadow-md' : 'bg-white text-gray-700 hover:bg-gray-100'}`}><University size={16}/> Schemes</button>
         <button onClick={() => setActiveTab('markets')} className={`px-4 py-2 rounded-full text-sm font-semibold flex items-center gap-2 transition-all ${activeTab === 'markets' ? 'bg-green-600 text-white shadow-md' : 'bg-white text-gray-700 hover:bg-gray-100'}`}><Tent size={16}/> Mandis</button>
@@ -299,12 +299,8 @@ export default function Resources() {
         )}
         </>
         )}
-      </div>
-    </div>
+      </div>
     </div>
-<<<<<<< HEAD
+    </div>
   );
-=======
-  );
->>>>>>> f4c1f6a (feat: Add responsive and informative site footer)
 }

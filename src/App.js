@@ -10,32 +10,46 @@ import Calendar from "./pages/Calendar";
 import Resources from "./pages/Resources";
 import Profile from "./pages/Profile";
 import CropRecommendations from "./pages/CropRecommendations";
-import { HelmetProvider, Helmet } from "react-helmet-async"; 
-import { useTranslation } from "react-i18next";
+import ErrorBoundary from "./components/ErrorBoundary"; // 👈 Import it
 
 export default function App() {
-  const { t, i18n } = useTranslation();
-
-  // Update document title whenever language changes
   useEffect(() => {
-    document.title = t("welcome"); // you can make a specific translation key for the title
-  }, [i18n.language, t]);
+    // ... your google translate script logic remains the same
+    const addTranslateScript = () => {
+      if (!document.getElementById("google-translate-script")) {
+        const script = document.createElement("script");
+        script.id = "google-translate-script";
+        script.src =
+          "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+        document.body.appendChild(script);
+      }
+      window.googleTranslateElementInit = () => {
+        new window.google.translate.TranslateElement(
+          {
+            pageLanguage: "en",
+            includedLanguages: "en,pa,hi,ta,te,bn,ml,mr,gu,kn",
+            layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
+          },
+          "google_translate_element"
+        );
+      };
+    };
+    addTranslateScript();
+  }, []);
 
   return (
-    <HelmetProvider>
-      <Router>
-        <ScrollToTop />
-        <div className="min-h-screen bg-slate-50 flex flex-col">
-          <Navbar />
-          <main className="flex-1 pt-4">
-            <Helmet>
-              {/* Dynamic <title> in browser tab */}
-              <title>{t("welcome")}</title>
-              <meta
-                name="description"
-                content={t("welcome")}
-              />
-            </Helmet>
+    <Router>
+      <ScrollToTop />
+      <div className="min-h-screen bg-slate-50 flex flex-col">
+        <Navbar />
+
+        <div className="flex justify-end p-2 bg-white shadow">
+          <div id="google_translate_element"></div>
+        </div>
+
+        <main className="flex-1 pt-4">
+          {/* 👇 Wrap your routes with the Error Boundary */}
+          <ErrorBoundary>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/crops" element={<CropRecommendations />} />
@@ -44,11 +58,11 @@ export default function App() {
               <Route path="/resources" element={<Resources />} />
               <Route path="/profile" element={<Profile />} />
             </Routes>
-          </main>
-          <Footer />
-        </div>
-      </Router>
-    </HelmetProvider>
+          </ErrorBoundary>
+        </main>
+
+        <Footer />
+      </div>
+    </Router>
   );
 }
-

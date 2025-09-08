@@ -1,34 +1,44 @@
 // src/components/Navbar.js
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 export default function Navbar() {
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  
+
   const navLinks = [
     { path: "/", label: "Home" },
     { path: "/crops", label: "Crops" },
     { path: "/weather", label: "Weather" },
     { path: "/calendar", label: "Calendar" },
     { path: "/resources", label: "Resources" },
+	{ path: "/market", label: "Market Insights" },
     { path: "/profile", label: "Profile" },
   ];
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+  useEffect(() => {
+    if (window.google && window.google.translate) {
+      new window.google.translate.TranslateElement(
+        {
+          pageLanguage: "en",
+          includedLanguages: "hi,ta,te,bn,mr,gu,kn,ml,pa,ur",
+          layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
+        },
+        "google_translate_element"
+      );
+    }
+  }, []);
 
   return (
     <nav className="bg-white shadow-sm border-b sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Desktop Layout */}
+        {/* Desktop Navbar */}
         <div className="hidden md:flex justify-between items-center h-16">
           <Link to="/" className="flex items-center space-x-2">
             <span className="text-2xl">🌾</span>
             <span className="font-bold text-xl">Punjab Agriculture</span>
           </Link>
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-6">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
@@ -42,20 +52,20 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
+            {/* Google Translate */}
+            <div id="google_translate_element" className="ml-4"></div>
           </div>
         </div>
 
-        {/* Mobile Layout */}
+        {/* Mobile Navbar */}
         <div className="md:hidden">
           <div className="flex justify-between items-center h-16">
             <Link to="/" className="flex items-center space-x-2">
               <span className="text-2xl">🌾</span>
               <span className="font-bold text-lg">Punjab Agriculture</span>
             </Link>
-            
-            {/* Mobile Menu Button */}
             <button
-              onClick={toggleMenu}
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="p-2 rounded-md text-gray-700 hover:text-green-600 hover:bg-gray-50"
               aria-label="Toggle menu"
             >
@@ -69,7 +79,6 @@ export default function Navbar() {
             </button>
           </div>
 
-          {/* Mobile Navigation Menu */}
           {isMenuOpen && (
             <div className="pb-4 border-t border-gray-200">
               <div className="flex flex-col space-y-1 mt-4">
@@ -87,6 +96,8 @@ export default function Navbar() {
                     {link.label}
                   </Link>
                 ))}
+                {/* Google Translate */}
+                <div id="google_translate_element" className="px-4 mt-2"></div>
               </div>
             </div>
           )}
@@ -95,4 +106,3 @@ export default function Navbar() {
     </nav>
   );
 }
-

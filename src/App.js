@@ -11,6 +11,7 @@ import Resources from "./pages/Resources";
 import Profile from "./pages/Profile";
 import CropRecommendations from "./pages/CropRecommendations";
 import ErrorBoundary from "./components/ErrorBoundary";
+import MarketInsights from "./pages/MarketInsights";
 
 export default function App() {
   return (
@@ -27,6 +28,8 @@ export default function App() {
               <Route path="/calendar" element={<Calendar />} />
               <Route path="/resources" element={<Resources />} />
               <Route path="/profile" element={<Profile />} />
+		<Route path="/market" element={<MarketInsights />} />
+
             </Routes>
           </ErrorBoundary>
         </main>

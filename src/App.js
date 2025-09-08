@@ -1,6 +1,5 @@
-// src/App.js
 import React, { useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -10,45 +9,33 @@ import Calendar from "./pages/Calendar";
 import Resources from "./pages/Resources";
 import Profile from "./pages/Profile";
 import CropRecommendations from "./pages/CropRecommendations";
-import ErrorBoundary from "./components/ErrorBoundary"; // 👈 Import it
+import ErrorBoundary from "./components/ErrorBoundary";
+
+// Re-initialize Google Translate on route changes
+function GoogleTranslateReinit() {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (window.googleTranslateElementInit) {
+      try {
+        window.googleTranslateElementInit();
+      } catch (err) {
+        console.warn("Google Translate re-init failed:", err);
+      }
+    }
+  }, [location]);
+
+  return null;
+}
 
 export default function App() {
-  useEffect(() => {
-    // ... your google translate script logic remains the same
-    const addTranslateScript = () => {
-      if (!document.getElementById("google-translate-script")) {
-        const script = document.createElement("script");
-        script.id = "google-translate-script";
-        script.src =
-          "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
-        document.body.appendChild(script);
-      }
-      window.googleTranslateElementInit = () => {
-        new window.google.translate.TranslateElement(
-          {
-            pageLanguage: "en",
-            includedLanguages: "en,pa,hi,ta,te,bn,ml,mr,gu,kn",
-            layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
-          },
-          "google_translate_element"
-        );
-      };
-    };
-    addTranslateScript();
-  }, []);
-
   return (
     <Router>
       <ScrollToTop />
+      <GoogleTranslateReinit />
       <div className="min-h-screen bg-slate-50 flex flex-col">
         <Navbar />
-
-        <div className="flex justify-end p-2 bg-white shadow">
-          <div id="google_translate_element"></div>
-        </div>
-
         <main className="flex-1 pt-4">
-          {/* 👇 Wrap your routes with the Error Boundary */}
           <ErrorBoundary>
             <Routes>
               <Route path="/" element={<Home />} />
@@ -60,7 +47,6 @@ export default function App() {
             </Routes>
           </ErrorBoundary>
         </main>
-
         <Footer />
       </div>
     </Router>

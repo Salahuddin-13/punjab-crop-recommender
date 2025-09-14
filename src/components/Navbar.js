@@ -1,33 +1,20 @@
 // src/components/Navbar.js
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 export default function Navbar() {
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+  
   const navLinks = [
     { path: "/", label: "Home" },
     { path: "/crops", label: "Crops" },
     { path: "/weather", label: "Weather" },
     { path: "/calendar", label: "Calendar" },
     { path: "/resources", label: "Resources" },
-	{ path: "/market", label: "Market Insights" },
+    { path: "/market", label: "Market Insights" },
     { path: "/profile", label: "Profile" },
   ];
-
-  useEffect(() => {
-    if (window.google && window.google.translate) {
-      new window.google.translate.TranslateElement(
-        {
-          pageLanguage: "en",
-          includedLanguages: "hi,ta,te,bn,mr,gu,kn,ml,pa,ur",
-          layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
-        },
-        "google_translate_element"
-      );
-    }
-  }, []);
 
   return (
     <nav className="bg-white shadow-sm border-b sticky top-0 z-50">
@@ -52,8 +39,6 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
-            {/* Google Translate */}
-            <div id="google_translate_element" className="ml-4"></div>
           </div>
         </div>
 
@@ -96,8 +81,6 @@ export default function Navbar() {
                     {link.label}
                   </Link>
                 ))}
-                {/* Google Translate */}
-                <div id="google_translate_element" className="px-4 mt-2"></div>
               </div>
             </div>
           )}
@@ -106,3 +89,4 @@ export default function Navbar() {
     </nav>
   );
 }
+

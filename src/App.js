@@ -1,6 +1,6 @@
 // src/App.js
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -28,8 +28,9 @@ export default function App() {
               <Route path="/calendar" element={<Calendar />} />
               <Route path="/resources" element={<Resources />} />
               <Route path="/profile" element={<Profile />} />
-		<Route path="/market" element={<MarketInsights />} />
-
+              <Route path="/market" element={<MarketInsights />} />
+              {/* Catch-all route - redirects unknown paths to home */}
+              <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </ErrorBoundary>
         </main>

@@ -11,7 +11,8 @@ import Resources from "./pages/Resources";
 import Profile from "./pages/Profile";
 import CropRecommendations from "./pages/CropRecommendations";
 import MarketInsights from "./pages/MarketInsights";
-import AIAdvisory from "./pages/AIAdvisory"; // NEW - AI Advisory page
+import AIAdvisory from "./pages/AIAdvisory";
+import ChatBot from "./pages/ChatBot"; // NEW - ChatBot page
 import ErrorBoundary from "./components/ErrorBoundary";
 
 export default function App() {
@@ -30,8 +31,8 @@ export default function App() {
               <Route path="/resources" element={<Resources />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/market" element={<MarketInsights />} />
-              <Route path="/ai-advisory" element={<AIAdvisory />} /> {/* NEW ROUTE */}
-              {/* Catch-all route - redirects unknown paths to home */}
+              <Route path="/ai-advisory" element={<AIAdvisory />} />
+              <Route path="/chatbot" element={<ChatBot />} /> {/* NEW ROUTE */}
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </ErrorBoundary>

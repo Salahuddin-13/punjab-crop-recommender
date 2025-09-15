@@ -8,7 +8,8 @@ export default function Navbar() {
   const navLinks = [
     { path: "/", label: "Home" },
     { path: "/crops", label: "Crops" },
-    { path: "/ai-advisory", label: "🤖 AI Advisory", highlight: true }, // NEW - AI Advisory link
+    { path: "/ai-advisory", label: "🤖 AI Advisory", highlight: true },
+    { path: "/chatbot", label: "💬 ChatBot", highlight: true }, // NEW - ChatBot link
     { path: "/weather", label: "Weather" },
     { path: "/calendar", label: "Calendar" },
     { path: "/resources", label: "Resources" },
@@ -33,10 +34,10 @@ export default function Navbar() {
                 className={`px-3 py-2 rounded-md text-sm font-medium ${
                   location.pathname === link.path
                     ? link.highlight 
-                      ? "text-white bg-green-600" // Special styling for AI Advisory when active
+                      ? "text-white bg-green-600"
                       : "text-green-600 bg-green-50"
                     : link.highlight
-                    ? "text-green-600 bg-green-100 hover:bg-green-200" // Special styling for AI Advisory
+                    ? "text-green-600 bg-green-100 hover:bg-green-200"
                     : "text-gray-700 hover:text-green-600"
                 }`}
               >

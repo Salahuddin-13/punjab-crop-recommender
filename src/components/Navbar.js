@@ -1,14 +1,14 @@
-// src/components/Navbar.js
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 export default function Navbar() {
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  
+
   const navLinks = [
     { path: "/", label: "Home" },
     { path: "/crops", label: "Crops" },
+    { path: "/ai-advisory", label: "🤖 AI Advisory", highlight: true }, // NEW - AI Advisory link
     { path: "/weather", label: "Weather" },
     { path: "/calendar", label: "Calendar" },
     { path: "/resources", label: "Resources" },
@@ -32,7 +32,11 @@ export default function Navbar() {
                 to={link.path}
                 className={`px-3 py-2 rounded-md text-sm font-medium ${
                   location.pathname === link.path
-                    ? "text-green-600 bg-green-50"
+                    ? link.highlight 
+                      ? "text-white bg-green-600" // Special styling for AI Advisory when active
+                      : "text-green-600 bg-green-50"
+                    : link.highlight
+                    ? "text-green-600 bg-green-100 hover:bg-green-200" // Special styling for AI Advisory
                     : "text-gray-700 hover:text-green-600"
                 }`}
               >
@@ -63,7 +67,6 @@ export default function Navbar() {
               </svg>
             </button>
           </div>
-
           {isMenuOpen && (
             <div className="pb-4 border-t border-gray-200">
               <div className="flex flex-col space-y-1 mt-4">
@@ -74,7 +77,11 @@ export default function Navbar() {
                     onClick={() => setIsMenuOpen(false)}
                     className={`block px-4 py-3 rounded-md text-sm font-medium ${
                       location.pathname === link.path
-                        ? "text-green-600 bg-green-50"
+                        ? link.highlight
+                          ? "text-white bg-green-600"
+                          : "text-green-600 bg-green-50"
+                        : link.highlight
+                        ? "text-green-600 bg-green-100 hover:bg-green-200"
                         : "text-gray-700 hover:text-green-600 hover:bg-gray-50"
                     }`}
                   >
@@ -89,4 +96,3 @@ export default function Navbar() {
     </nav>
   );
 }
-

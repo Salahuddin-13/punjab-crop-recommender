@@ -29,10 +29,62 @@
 }
 
 @keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Hide Google Translate floating banner so it doesn’t overlap the navbar */
+body > .skiptranslate,
+.goog-te-banner-frame.skiptranslate {
+  display: none !important;
+}
+body {
+  top: 0 !important;
+}
+
+/* Hide the Google logo in the dropdown */
+.goog-te-gadget img {
+  display: none !important;
+}
+
+/* Style for the translate dropdown container */
+#google_translate_element {
+  text-align: right;
+  padding: 0.5rem;
+}
+/* App.css */
+/* Hide the top banner/toolbar inserted by Google Translate */
+.skiptranslate > iframe {
+  height: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+/* Hide the residual skiptranslate container */
+body > .skiptranslate {
+  display: none !important;
+}
+body {
+  top: 0 !important;  /* reset any top offset Google adds */
+}
+
+/* Hide Google’s logo/icon in the widget */
+.goog-te-gadget-icon,
+.goog-te-gadget img {
+  display: none !important;
+}
+
+/* Optionally style the translate selector to match navbar */
+// .goog-te-gadget-simple is the class Google uses on the translate box
+.goog-te-gadget-simple {
+  background-color: transparent !important;
+  border: none !important;
+  color: inherit !important;
+  font-weight: normal !important;
+}
+iframe.goog-te-banner-frame.skiptranslate {
+  display: none !important;
+}
+body {
+  position: static !important;
+  top: 0 !important;
 }

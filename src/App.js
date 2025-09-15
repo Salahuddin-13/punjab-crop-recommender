@@ -10,8 +10,9 @@ import Calendar from "./pages/Calendar";
 import Resources from "./pages/Resources";
 import Profile from "./pages/Profile";
 import CropRecommendations from "./pages/CropRecommendations";
-import ErrorBoundary from "./components/ErrorBoundary";
 import MarketInsights from "./pages/MarketInsights";
+import AIAdvisory from "./pages/AIAdvisory"; // NEW - AI Advisory page
+import ErrorBoundary from "./components/ErrorBoundary";
 
 export default function App() {
   return (
@@ -29,6 +30,7 @@ export default function App() {
               <Route path="/resources" element={<Resources />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/market" element={<MarketInsights />} />
+              <Route path="/ai-advisory" element={<AIAdvisory />} /> {/* NEW ROUTE */}
               {/* Catch-all route - redirects unknown paths to home */}
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
@@ -39,4 +41,3 @@ export default function App() {
     </Router>
   );
 }
-
